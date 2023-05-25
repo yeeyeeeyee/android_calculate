@@ -8,11 +8,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.constraintlayout.compose.ConstraintLayout
 
 @Composable
 fun CalculatorUi(){
     Surface(color = Color.Black, modifier = Modifier.fillMaxSize()) {//背景黑色 &&填滿畫面
-
+    ConstraintLayout() {
+        var (one,two)=createRefs()
         Column {
             Row(Modifier.fillMaxWidth()) {
                 ButtonStyle("1", onclick = {})
@@ -21,6 +23,8 @@ fun CalculatorUi(){
                 ButtonStyle("=", onclick = {})
             }
         }
+    }
+
     }
 
 

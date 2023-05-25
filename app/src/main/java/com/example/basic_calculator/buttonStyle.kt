@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun ButtonStyle(
     text: String="",
+    color: Color= colorResource(id=R.color.number),
     onclick:()->Unit,
 ) {
-
     Button(
         onClick=onclick,
         shape = RoundedCornerShape(20.dp),
@@ -33,7 +33,7 @@ fun ButtonStyle(
             text = text,
             fontSize = 30.sp,
             style = MaterialTheme.typography.displayLarge,
-            color = colorResource(id=R.color.number),
+            color = color,
             modifier = Modifier
                 .size(40.dp),
             textAlign = TextAlign.Center
