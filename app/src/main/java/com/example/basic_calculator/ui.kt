@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -21,13 +22,45 @@ import androidx.compose.ui.unit.sp
 fun CalculatorUi() {
     Surface(color = Color.Black, modifier = Modifier.fillMaxSize()) {//背景黑色 &&填滿畫面
 
-
-        //案件位置
+        //位置
         Column(verticalArrangement = Arrangement.Bottom) {
-
+            //顯示已輸入的數字
+            Row(Modifier.fillMaxWidth()) {
+                //數字1: 運算符號前
+                Text(
+                    text = "123",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    color = Color.Gray,
+                    fontSize = 30.sp,
+                )
+                //雲算符號
+                Text(
+                    text = "+",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    color = Color.Gray,
+                    fontSize = 30.sp,
+                )
+                //數字2: 運算符號後
+                Text(
+                    text = "789",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    color = Color.Gray,
+                    fontSize = 30.sp,
+                )
+            }
+            //顯示輸入文字
             Text(
                 text = "123",
-                textAlign= TextAlign.End,
+                textAlign = TextAlign.End,
                 color = Color.White,
                 fontSize = 50.sp,
                 modifier = Modifier
@@ -35,8 +68,9 @@ fun CalculatorUi() {
                     .fillMaxWidth()
                     .height(80.dp)
             )
-            Spacer(modifier = Modifier.height(20.dp))
 
+            Spacer(modifier = Modifier.height(20.dp))
+            //按鈕
             Row(
                 Modifier
                     .fillMaxWidth()
@@ -108,5 +142,11 @@ fun CalculatorUi() {
 }
 
 
+@Preview(showBackground = false)
+@Composable
+fun Basic_CalculatorTheme() {
+    CalculatorUi()
+
+}
 
 
