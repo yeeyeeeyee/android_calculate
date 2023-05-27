@@ -34,7 +34,5 @@ fun GreetingPreview() {
     Basic_CalculatorTheme {
             CalculatorUi()
 
-
-
     }
 }
