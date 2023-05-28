@@ -11,6 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -25,49 +29,7 @@ fun CalculatorUi() {
         //位置
         Column(verticalArrangement = Arrangement.Bottom) {
             //顯示已輸入的數字
-            Row(Modifier.fillMaxWidth()) {
-                //數字1: 運算符號前
-                Text(
-                    text = "123",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth(),
-                    color = Color.Gray,
-                    fontSize = 30.sp,
-                )
-                //雲算符號
-                Text(
-                    text = "+",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth(),
-                    color = Color.Gray,
-                    fontSize = 30.sp,
-                )
-                //數字2: 運算符號後
-                Text(
-                    text = "789",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth(),
-                    color = Color.Gray,
-                    fontSize = 30.sp,
-                )
-            }
-            //顯示輸入文字
-            Text(
-                text = "123",
-                textAlign = TextAlign.End,
-                color = Color.White,
-                fontSize = 50.sp,
-                modifier = Modifier
-                    .padding(10.dp, 0.dp)
-                    .fillMaxWidth()
-                    .height(80.dp)
-            )
+            Display_Text()
 
             Spacer(modifier = Modifier.height(20.dp))
             //按鈕
@@ -133,11 +95,70 @@ fun CalculatorUi() {
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 ButtonStyle("+/-", onclick = {})
-                ButtonStyle("0", onclick = {})
+                ButtonStyle("0", onclick = { })
                 ButtonStyle(".", onclick = {})
                 ButtonStyle("=", onclick = {})
             }
         }
+    }
+}
+
+@Composable
+//顯示已輸入的數字
+fun Display_Text(){
+    var number1 by remember {
+        mutableStateOf("1")
+    }
+    var number2 by remember {
+        mutableStateOf("1")
+    }
+    var display by remember {
+        mutableStateOf("1")
+    }
+    Column() {
+        Row(Modifier.fillMaxWidth()) {
+            //數字1: 運算符號前
+            Text(
+                text = number1,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                color = Color.Gray,
+                fontSize = 30.sp,
+            )
+            //雲算符號
+            Text(
+                text = "+",
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                color = Color.Gray,
+                fontSize = 30.sp,
+            )
+            //數字2: 運算符號後
+            Text(
+                text = number2,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                color = Color.Gray,
+                fontSize = 30.sp,
+            )
+        }
+        //顯示輸入文字
+        Text(
+            text = "123",
+            textAlign = TextAlign.End,
+            color = Color.White,
+            fontSize = 50.sp,
+            modifier = Modifier
+                .padding(10.dp, 0.dp)
+                .fillMaxWidth()
+                .height(80.dp)
+        )
     }
 }
 
