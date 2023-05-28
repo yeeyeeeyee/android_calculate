@@ -37,12 +37,12 @@ class Operation {
     }
 
 
-    fun operation(num1: Number, num2: Number, operation: Int): Number {
+    fun operation(num1: Number, num2: Number, operation: String): Number {
         val result = when (operation) {
-            1 -> plus(num1, num2)
-            2 -> minus(num1, num2)
-            3 -> multiplied(num1, num2)
-            4 -> divided(num1, num2)
+            "plus" -> plus(num1, num2)
+            "minus" -> minus(num1, num2)
+            "multiplied" -> multiplied(num1, num2)
+            "divided" -> divided(num1, num2)
             else -> BigDecimal.ZERO
         }
 
