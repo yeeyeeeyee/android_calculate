@@ -87,11 +87,7 @@ fun CalculatorUi() {
             ) {
                 //當沒有選擇符號為顯示百分位數,否則取餘數
                 ButtonStyle("%") {
-                    if (number.operation == "") {
 
-                    } else {
-
-                    }
                 }
                 ButtonStyle("CE") {
                     if (number.num1Value != "") {
