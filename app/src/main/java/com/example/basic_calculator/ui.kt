@@ -158,7 +158,6 @@ fun CalculatorUi() {
                     if (display != "=") {
                         number.num1Value = display.substring(1)
                         number.operation = "+"
-
                     }
                 }
             }
