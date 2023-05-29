@@ -88,14 +88,35 @@ fun CalculatorUi() {
                     .fillMaxWidth()
                     .padding(10.dp), horizontalArrangement = Arrangement.SpaceAround
             ) {
-                ButtonStyle("%", onclick = {})
-                ButtonStyle("CE", onclick = {})
-                ButtonStyle("C", onclick = {display="="})
-                ButtonStyle("←", onclick = {
+                //當沒有選擇符號為顯示百分位數,否則取餘數
+                ButtonStyle("%") {
+                    if (number.operation == "") {
+
+                    } else{
+
+                    }
+                }
+                ButtonStyle("CE") {
+                    if (number.num1Value != "") {
+                        number.num2Value = ""
+                    } else {
+                        display = "="
+                        number.num1Value = ""
+                        number.operation = ""
+                        number.num2Value = ""
+                    }
+                }
+                ButtonStyle("C") {
+                    display = "="
+                    number.num1Value = ""
+                    number.operation = ""
+                    number.num2Value = ""
+                }
+                ButtonStyle("←") {
                     if (display.length > 1) {
                         display = display.dropLast(1)
                     }
-                })
+                }
             }
 
             Row(
@@ -103,10 +124,10 @@ fun CalculatorUi() {
                     .fillMaxWidth()
                     .padding(10.dp), horizontalArrangement = Arrangement.SpaceAround
             ) {
-                ButtonStyle("⅟x", onclick = {})
-                ButtonStyle("x²", onclick = {})
-                ButtonStyle("√x", onclick = {})
-                ButtonStyle("÷", onclick = {})
+                ButtonStyle("⅟x") {}
+                ButtonStyle("x²") {}
+                ButtonStyle("√x") {}
+                ButtonStyle("÷") {}
             }
 
             Row(
@@ -139,7 +160,12 @@ fun CalculatorUi() {
                 ButtonStyle("1", onclick = { display += "1" })
                 ButtonStyle("2", onclick = { display += "2" })
                 ButtonStyle("3", onclick = { display += "3" })
-                ButtonStyle("+", onclick = {})
+                //如果display 沒有數字無法啟用,當有數字時同時設定number.value的值跟operation為"+"
+                ButtonStyle("+"){
+                    if (display!="="){
+
+                    }
+                }
             }
 
             Row(
@@ -150,8 +176,13 @@ fun CalculatorUi() {
             ) {
                 ButtonStyle("+/-", onclick = {})
                 ButtonStyle("0", onclick = { display += "0" })
-                ButtonStyle(".", onclick = {})
-                ButtonStyle("=", onclick = {})
+                //確認時否有小數點沒有的話就加跟把長度記下來,長度小於小數點的位置則可以使用 反之亦然
+                ButtonStyle("."){
+                }
+                //需要先把文字轉成數字才能運算
+                ButtonStyle("="){
+
+                }
             }
         }
     }

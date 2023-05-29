@@ -39,10 +39,10 @@ class Operation {
 
     fun operation(num1: Number, num2: Number, operation: String): Number {
         val result = when (operation) {
-            "plus" -> plus(num1, num2)
-            "minus" -> minus(num1, num2)
-            "multiplied" -> multiplied(num1, num2)
-            "divided" -> divided(num1, num2)
+            "+" -> plus(num1, num2)
+            "-" -> minus(num1, num2)
+            "x" -> multiplied(num1, num2)
+            "÷" -> divided(num1, num2)
             else -> BigDecimal.ZERO
         }
 
