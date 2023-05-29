@@ -94,8 +94,7 @@ fun CalculatorUi() {
                 ButtonStyle("←", onclick = {
                     if (display.length > 1) {
                         display = display.dropLast(1)
-                    }
-                })
+                    } })
             }
 
             Row(
