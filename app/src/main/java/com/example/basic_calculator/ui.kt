@@ -18,15 +18,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+data class Display(var num1Value: String, var operation: String, var num2Value: String)
 @Composable
 fun CalculatorUi() {
-
-    data class Display(var num1Value: String, var operation: String, var num2Value: String)
-
     val number by remember {
         mutableStateOf(Display(num1Value = "", operation = "", num2Value = ""))
     }
@@ -45,6 +43,8 @@ fun CalculatorUi() {
             Text(
                 text = number.num1Value,
                 textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Clip,
                 modifier = Modifier
                     .fillMaxWidth(),
                 color = Color.Gray,
@@ -63,6 +63,8 @@ fun CalculatorUi() {
             Text(
                 text = number.num2Value,
                 textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Clip,
                 modifier = Modifier
                     .fillMaxWidth(),
                 color = Color.Gray,
@@ -90,7 +92,10 @@ fun CalculatorUi() {
             ) {
                 //當沒有選擇符號為顯示百分位數,否則取餘數
                 ButtonStyle("%") {
-
+                    if (number.num2Value==""){
+                        val result =display.substring(1).toDouble()
+                        display="=${(result*0.01).toString()}"
+                    }
                 }
                 //當value1還有值,就清除value2,否則全部清空
                 ButtonStyle("CE") {
@@ -219,14 +224,26 @@ fun CalculatorUi() {
                 //需要先把文字轉成數字才能運算
                 ButtonStyle("=") {
                     number.num2Value = display.substring(1)
+                    //要做出計算機的連續加法
+                    if (number.operation!=""&&number.num2Value==""){
+
+
+
+                    }else{
                     val answer = Operation().operation(
                         num1 =  number.num1Value.toDouble(),
                         num2 = number.num2Value.toDouble(),
                         operation = number.operation
                     )
-                    display = "=$answer"
+                        display = "=$answer"
+                        isFirstValueStored.value = true
+                        number.num1Value=""
+                        number.operation=""
+                        number.num2Value=""
 
-                    isFirstValueStored.value = true
+                    }
+
+
 
 
                 }
