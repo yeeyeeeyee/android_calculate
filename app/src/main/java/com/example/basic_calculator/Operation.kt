@@ -40,7 +40,11 @@ class Operation {
             else -> BigDecimal.ZERO
         }
 
-        return if (result.scale() > 0 )( result.toDouble()).toString() else (result.toInt()).toString()
+        return if (result.toString().last()=='0') {
+            result.toString().dropLast(2)
+        } else {
+            result.toString()
+        }
     }
 }
 

@@ -226,6 +226,7 @@ fun CalculatorUi() {
                         operation = number.operation
                     )
                     display = "=$answer"
+
                     isFirstValueStored.value = true
 
 
