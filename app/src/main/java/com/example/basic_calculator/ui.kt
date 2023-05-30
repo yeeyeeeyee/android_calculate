@@ -50,7 +50,7 @@ fun CalculatorUi() {
                 color = Color.Gray,
                 fontSize = 30.sp,
             )
-            //雲算符號
+            //運算符號
             Text(
                 text = number.operation,
                 textAlign = TextAlign.Center,
@@ -126,7 +126,16 @@ fun CalculatorUi() {
                 ButtonStyle("⅟x") {}
                 ButtonStyle("x²") {}
                 ButtonStyle("√x") {}
-                ButtonStyle("÷") {}
+                ButtonStyle("÷") {
+                    if (display != "=") {
+                    if (isFirstValueStored.value) {
+                        number.num1Value = display.substring(1)
+                        number.operation = "÷"
+                        display = "="
+                        isFirstValueStored.value = false
+                        }
+                    }
+                }
             }
 
             Row(
@@ -137,7 +146,17 @@ fun CalculatorUi() {
                 ButtonStyle("7", onclick = { display += "7" })
                 ButtonStyle("8", onclick = { display += "8" })
                 ButtonStyle("9", onclick = { display += "9" })
-                ButtonStyle("x", onclick = {})
+                ButtonStyle("x"){
+                    if (display != "=") {
+                        if (isFirstValueStored.value) {
+                            number.num1Value = display.substring(1)
+                            number.operation = "x"
+                            display = "="
+                            isFirstValueStored.value = false
+
+                        }
+                    }
+                }
             }
 
             Row(
@@ -148,7 +167,17 @@ fun CalculatorUi() {
                 ButtonStyle("4", onclick = { display += "4" })
                 ButtonStyle("5", onclick = { display += "5" })
                 ButtonStyle("6", onclick = { display += "6" })
-                ButtonStyle("-", onclick = {})
+                ButtonStyle("-"){
+                    if (display != "=") {
+                        if (isFirstValueStored.value) {
+                            number.num1Value = display.substring(1)
+                            number.operation = "-"
+                            display = "="
+                            isFirstValueStored.value = false
+
+                        }
+                    }
+                }
             }
 
             Row(
@@ -167,9 +196,6 @@ fun CalculatorUi() {
                             number.operation = "+"
                             display = "="
                             isFirstValueStored.value = false
-
-                        } else {
-
 
                         }
                     }
