@@ -35,14 +35,6 @@ fun CalculatorUi() {
     }
     val isFirstValueStored = remember { mutableStateOf(true) }
 
-    fun  clear(){
-        number.num1Value=""
-        number.num2Value=""
-        number.operation=""
-        isFirstValueStored.value=true
-        display="="
-
-    }
 
     Surface(color = Color.Black, modifier = Modifier.fillMaxSize()) {//背景黑色 &&填滿畫面
         //位置
@@ -105,11 +97,19 @@ fun CalculatorUi() {
                     if (number.num1Value != "") {
                         display = "="
                     } else {
-                        clear()
+                        number.num1Value=""
+                        number.num2Value=""
+                        number.operation=""
+                        isFirstValueStored.value=true
+                        display="="
                     }
                 }
                 ButtonStyle("C") {
-                    clear()
+                    number.num1Value=""
+                    number.num2Value=""
+                    number.operation=""
+                    isFirstValueStored.value=true
+                    display="="
                 }
                 ButtonStyle("←") {
                     if (display.length > 1) {
@@ -184,6 +184,7 @@ fun CalculatorUi() {
             ) {
                 ButtonStyle("+/-", onclick = {})
                 ButtonStyle("0", onclick = { display += "0" })
+                //沒有小數點就加上小數點
                 ButtonStyle(".") {
                     if (!display.contains(".")){
                         display+="."
@@ -194,9 +195,9 @@ fun CalculatorUi() {
                 ButtonStyle("=") {
                     number.num2Value = display.substring(1)
                     var answer = Operation().operation(
-                        number.num1Value.toDouble(),
-                        number.num2Value.toDouble(),
-                        number.operation
+                        num1 =  number.num1Value.toDouble(),
+                        num2 = number.num2Value.toDouble(),
+                        operation = number.operation
                     )
                     display = "=$answer"
                     isFirstValueStored.value = true
