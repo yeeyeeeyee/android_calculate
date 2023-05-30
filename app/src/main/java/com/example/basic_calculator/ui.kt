@@ -32,6 +32,7 @@ fun CalculatorUi() {
     var display by remember {
         mutableStateOf("=")
     }
+    val isFirstValueStored = remember { mutableStateOf(true) }
 
     Surface(color = Color.Black, modifier = Modifier.fillMaxSize()) {//背景黑色 &&填滿畫面
         //位置
@@ -156,8 +157,16 @@ fun CalculatorUi() {
                 //如果display 沒有數字無法啟用,當有數字時同時設定number.value的值跟operation為"+"
                 ButtonStyle("+") {
                     if (display != "=") {
-                        number.num1Value = display.substring(1)
-                        number.operation = "+"
+                        if (isFirstValueStored.value) {
+                            number.num1Value = display.substring(1)
+                            number.operation = "+"
+                            display = "="
+                            isFirstValueStored.value = false
+
+                        } else {
+
+
+                        }
                     }
                 }
             }
@@ -175,13 +184,21 @@ fun CalculatorUi() {
                 }
                 //需要先把文字轉成數字才能運算
                 ButtonStyle("=") {
+                    number.num2Value = display.substring(1)
+                    var answer = Operation().operation(
+                        number.num1Value.toDouble(),
+                        number.num2Value.toDouble(),
+                        number.operation
+                    )
+                    display = "=$answer"
+                    isFirstValueStored.value = true
+
 
                 }
             }
         }
     }
 }
-
 
 
 @Preview(showBackground = false)

@@ -37,7 +37,7 @@ class Operation {
     }
 
 
-    fun operation(num1: Number, num2: Number, operation: String): Number {
+    fun operation(num1: Number, num2: Number, operation: String): String {
         val result = when (operation) {
             "+" -> plus(num1, num2)
             "-" -> minus(num1, num2)
@@ -46,6 +46,8 @@ class Operation {
             else -> BigDecimal.ZERO
         }
 
-        return if (result.scale() > 0 ) result.toDouble() else result.toInt()
+        return if (result.scale() > 0 ) result.toDouble().toString() else result.toInt().toString()
     }
 }
+
+
