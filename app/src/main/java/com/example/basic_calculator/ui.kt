@@ -214,7 +214,6 @@ fun CalculatorUi() {
                 ButtonStyle(".") {
                     if (!display.contains(".")){
                         display+="."
-
                     }
                 }
                 //需要先把文字轉成數字才能運算
