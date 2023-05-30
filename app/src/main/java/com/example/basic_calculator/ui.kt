@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun CalculatorUi() {
+
     data class Display(var num1Value: String, var operation: String, var num2Value: String)
 
     val number by remember {
@@ -33,6 +34,15 @@ fun CalculatorUi() {
         mutableStateOf("=")
     }
     val isFirstValueStored = remember { mutableStateOf(true) }
+
+    fun  clear(){
+        number.num1Value=""
+        number.num2Value=""
+        number.operation=""
+        isFirstValueStored.value=true
+        display="="
+
+    }
 
     Surface(color = Color.Black, modifier = Modifier.fillMaxSize()) {//背景黑色 &&填滿畫面
         //位置
@@ -90,21 +100,16 @@ fun CalculatorUi() {
                 ButtonStyle("%") {
 
                 }
+                //當value1還有值,就清除value2,否則全部清空
                 ButtonStyle("CE") {
                     if (number.num1Value != "") {
-                        number.num2Value = ""
-                    } else {
                         display = "="
-                        number.num1Value = ""
-                        number.operation = ""
-                        number.num2Value = ""
+                    } else {
+                        clear()
                     }
                 }
                 ButtonStyle("C") {
-                    display = "="
-                    number.num1Value = ""
-                    number.operation = ""
-                    number.num2Value = ""
+                    clear()
                 }
                 ButtonStyle("←") {
                     if (display.length > 1) {
@@ -179,8 +184,11 @@ fun CalculatorUi() {
             ) {
                 ButtonStyle("+/-", onclick = {})
                 ButtonStyle("0", onclick = { display += "0" })
-                //確認時否有小數點沒有的話就加跟把長度記下來,長度小於小數點的位置則可以使用 反之亦然
                 ButtonStyle(".") {
+                    if (!display.contains(".")){
+                        display+="."
+
+                    }
                 }
                 //需要先把文字轉成數字才能運算
                 ButtonStyle("=") {
