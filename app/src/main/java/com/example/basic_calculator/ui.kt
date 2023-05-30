@@ -219,7 +219,7 @@ fun CalculatorUi() {
                 //需要先把文字轉成數字才能運算
                 ButtonStyle("=") {
                     number.num2Value = display.substring(1)
-                    var answer = Operation().operation(
+                    val answer = Operation().operation(
                         num1 =  number.num1Value.toDouble(),
                         num2 = number.num2Value.toDouble(),
                         operation = number.operation

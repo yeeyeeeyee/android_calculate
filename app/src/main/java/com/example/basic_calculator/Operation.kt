@@ -5,18 +5,18 @@ import java.math.RoundingMode
 
 class Operation {
     private fun plus(num1: Double, num2: Double): BigDecimal {
-        return  BigDecimal.valueOf(num1) + BigDecimal.valueOf(num2)
-        }
+        return BigDecimal.valueOf(num1).add(BigDecimal.valueOf(num2))
+    }
 
 
     private fun minus(num1: Double, num2: Double): BigDecimal {
-        return  BigDecimal.valueOf(num1) - BigDecimal.valueOf(num2)
+        return BigDecimal.valueOf(num1).minus(BigDecimal.valueOf(num2))
 
     }
 
     private fun multiplied(num1: Double, num2: Double): BigDecimal {
-        return  BigDecimal.valueOf(num1) * BigDecimal.valueOf(num2)
-        }
+        return BigDecimal.valueOf(num1).multiply(BigDecimal.valueOf(num2))
+    }
 
 
     private fun divided(num1: Double, num2: Double): BigDecimal {
@@ -40,8 +40,8 @@ class Operation {
             else -> BigDecimal.ZERO
         }
 
-        return if (result.toString().last()=='0') {
-            result.toString().dropLast(2)
+        return if (result.toString().last() == '0') {
+             result.toString().substringBefore('.')
         } else {
             result.toString()
         }
