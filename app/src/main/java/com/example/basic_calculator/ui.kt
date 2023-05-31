@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,10 +19,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
+
+
 
 data class Display(var num1Value: String, var operation: String, var num2Value: String)
 
@@ -81,21 +84,16 @@ fun CalculatorUi() {
                 }
                 //當value1還有值,就清除value2,否則全部清空
                 ButtonStyle("CE") {
-                    if (number.num1Value != "") {
-                        display = "="
+                        display = if (number.num1Value != "") {
+                            "="
                     } else {
-                        number.num1Value = ""
-                        number.num2Value = ""
-                        number.operation = ""
-                        isFirstValueStored.value = true
-                        display = "="
+
+                        clearAllValues(number,isFirstValueStored)
+                        "="
                     }
                 }
                 ButtonStyle("C") {
-                    number.num1Value = ""
-                    number.num2Value = ""
-                    number.operation = ""
-                    isFirstValueStored.value = true
+                    clearAllValues(number, isFirstValueStored)
                     display = "="
                 }
                 ButtonStyle("←") {
@@ -215,10 +213,7 @@ fun CalculatorUi() {
                                 operation=number.operation
                             )
                             display = "=$answer"
-                            isFirstValueStored.value = true
-                            number.num1Value = ""
-                            number.operation = ""
-                            number.num2Value = ""
+                            clearAllValues(number,isFirstValueStored)
 
                         //兩個參數的
                         } else {
@@ -229,10 +224,7 @@ fun CalculatorUi() {
                                 operation = number.operation
                             )
                             display = "=$answer"
-                            isFirstValueStored.value = true
-                            number.num1Value = ""
-                            number.operation = ""
-                            number.num2Value = ""
+                            clearAllValues(number,isFirstValueStored)
 
                         }
                     }
@@ -244,7 +236,12 @@ fun CalculatorUi() {
     }
 }
 
-
+private fun clearAllValues(number: Display, isFirstValueStored: MutableState<Boolean>) {
+    number.num1Value = ""
+    number.num2Value = ""
+    number.operation = ""
+    isFirstValueStored.value = true
+}
 
 
 
