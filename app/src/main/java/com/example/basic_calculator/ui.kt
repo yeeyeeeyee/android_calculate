@@ -24,7 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
-
+/*
+欠缺功能:
+    設置 % 取餘數
+    修改架構
+ */
 
 data class Display(var num1Value: String, var operation: String, var num2Value: String)
 
@@ -235,7 +239,7 @@ fun CalculatorUi() {
         }
     }
 }
-
+//清除
 private fun clearAllValues(number: Display, isFirstValueStored: MutableState<Boolean>) {
     number.num1Value = ""
     number.num2Value = ""

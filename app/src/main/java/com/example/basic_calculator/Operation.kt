@@ -10,7 +10,7 @@ class Operation {
     }
 
 
-    private fun _minus(num1: Double, num2: Double): BigDecimal {
+    private fun minus(num1: Double, num2: Double): BigDecimal {
         return BigDecimal.valueOf(num1).minus(BigDecimal.valueOf(num2))
 
     }
@@ -22,7 +22,7 @@ class Operation {
 
     private fun divided(num1: Double, num2: Double): BigDecimal {
         if (num2 == 0.0) {
-            return BigDecimal.valueOf(-1)
+            return BigDecimal.valueOf(0)
         }
         return BigDecimal(num1).divide(
             BigDecimal(num2),
@@ -35,17 +35,13 @@ class Operation {
     fun operation(num1: Double, num2: Double, operation: String): String {
         val result = when (operation) {
             "+" -> plus(num1, num2)
-            "-" -> _minus(num1, num2)
+            "-" -> minus(num1, num2)
             "x" -> multiplied(num1, num2)
             "÷" -> divided(num1, num2)
             else -> BigDecimal.ZERO
         }
 
-        return if (result.toString().last() == '0') {
-             result.toString()
-        } else {
-            result.toString()
-        }
+        return return result.stripTrailingZeros().toPlainString()
     }
 
     //---------------------------------------------------------------------------------------------
@@ -62,11 +58,7 @@ class Operation {
             else -> BigDecimal.ZERO
         }
 
-        return if (result.toString().last() == '0') {
-            result.toString()
-        } else {
-            result.toString()
-        }
+        return result.stripTrailingZeros().toPlainString()
     }
 
 
