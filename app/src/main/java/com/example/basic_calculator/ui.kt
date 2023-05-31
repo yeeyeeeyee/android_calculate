@@ -244,19 +244,8 @@ fun CalculatorUi() {
     }
 }
 
-@Composable
-fun DisplayText(text: String) {
-    Text(
-        text = text,
-        textAlign = TextAlign.Center,
-        maxLines = 1,
-        overflow = TextOverflow.Clip,
-        modifier = Modifier
-            .fillMaxWidth(),
-        color = Color.Gray,
-        fontSize = 30.sp,
-    )
-}
+
+
 
 
 @Preview(showBackground = false)
