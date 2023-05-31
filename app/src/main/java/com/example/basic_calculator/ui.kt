@@ -22,7 +22,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
 data class Display(var num1Value: String, var operation: String, var num2Value: String)
+
 @Composable
 fun CalculatorUi() {
     val number by remember {
@@ -92,9 +94,14 @@ fun CalculatorUi() {
             ) {
                 //當沒有選擇符號為顯示百分位數,否則取餘數
                 ButtonStyle("%") {
-                    if (number.num2Value==""){
-                        val result =display.substring(1).toDouble()
-                        display="=${(result*0.01).toString()}"
+                    if (display != "=") {
+                        if (isFirstValueStored.value) {
+                            number.num1Value = display.substring(1)
+                            number.operation = "%"
+                            display = "="
+                            isFirstValueStored.value = false
+
+                        }
                     }
                 }
                 //當value1還有值,就清除value2,否則全部清空
@@ -102,19 +109,19 @@ fun CalculatorUi() {
                     if (number.num1Value != "") {
                         display = "="
                     } else {
-                        number.num1Value=""
-                        number.num2Value=""
-                        number.operation=""
-                        isFirstValueStored.value=true
-                        display="="
+                        number.num1Value = ""
+                        number.num2Value = ""
+                        number.operation = ""
+                        isFirstValueStored.value = true
+                        display = "="
                     }
                 }
                 ButtonStyle("C") {
-                    number.num1Value=""
-                    number.num2Value=""
-                    number.operation=""
-                    isFirstValueStored.value=true
-                    display="="
+                    number.num1Value = ""
+                    number.num2Value = ""
+                    number.operation = ""
+                    isFirstValueStored.value = true
+                    display = "="
                 }
                 ButtonStyle("←") {
                     if (display.length > 1) {
@@ -133,11 +140,11 @@ fun CalculatorUi() {
                 ButtonStyle("√x") {}
                 ButtonStyle("÷") {
                     if (display != "=") {
-                    if (isFirstValueStored.value) {
-                        number.num1Value = display.substring(1)
-                        number.operation = "÷"
-                        display = "="
-                        isFirstValueStored.value = false
+                        if (isFirstValueStored.value) {
+                            number.num1Value = display.substring(1)
+                            number.operation = "÷"
+                            display = "="
+                            isFirstValueStored.value = false
                         }
                     }
                 }
@@ -151,7 +158,7 @@ fun CalculatorUi() {
                 ButtonStyle("7", onclick = { display += "7" })
                 ButtonStyle("8", onclick = { display += "8" })
                 ButtonStyle("9", onclick = { display += "9" })
-                ButtonStyle("x"){
+                ButtonStyle("x") {
                     if (display != "=") {
                         if (isFirstValueStored.value) {
                             number.num1Value = display.substring(1)
@@ -172,7 +179,7 @@ fun CalculatorUi() {
                 ButtonStyle("4", onclick = { display += "4" })
                 ButtonStyle("5", onclick = { display += "5" })
                 ButtonStyle("6", onclick = { display += "6" })
-                ButtonStyle("-"){
+                ButtonStyle("-") {
                     if (display != "=") {
                         if (isFirstValueStored.value) {
                             number.num1Value = display.substring(1)
@@ -213,37 +220,47 @@ fun CalculatorUi() {
                     .padding(10.dp, 10.dp, 10.dp, 20.dp),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                ButtonStyle("+/-", onclick = {})
+                ButtonStyle("+/-"){}
                 ButtonStyle("0", onclick = { display += "0" })
                 //沒有小數點就加上小數點
                 ButtonStyle(".") {
-                    if (!display.contains(".")){
-                        display+="."
+                    if (!display.contains(".")) {
+                        display += "."
                     }
                 }
                 //需要先把文字轉成數字才能運算
                 ButtonStyle("=") {
-                    number.num2Value = display.substring(1)
-                    //要做出計算機的連續加法
-                    if (number.operation!=""&&number.num2Value==""){
+                    //防止啥都不按,只按'='
+                    if (number.operation != "") {
+                        //要做出計算機的連續加法
+                        //一個參數的
+                        if (number.num2Value == "") {
+                            val answer = Operation().operation(
+                                num1 = number.num1Value.toDouble(),
+                                operation=number.operation
+                            )
+                            display = "=$answer"
+                            isFirstValueStored.value = true
+                            number.num1Value = ""
+                            number.operation = ""
+                            number.num2Value = ""
 
+                        //兩個參數的
+                        } else {
+                            number.num2Value = display.substring(1)
+                            val answer = Operation().operation(
+                                num1 = number.num1Value.toDouble(),
+                                num2 = number.num2Value.toDouble(),
+                                operation = number.operation
+                            )
+                            display = "=$answer"
+                            isFirstValueStored.value = true
+                            number.num1Value = ""
+                            number.operation = ""
+                            number.num2Value = ""
 
-
-                    }else{
-                    val answer = Operation().operation(
-                        num1 =  number.num1Value.toDouble(),
-                        num2 = number.num2Value.toDouble(),
-                        operation = number.operation
-                    )
-                        display = "=$answer"
-                        isFirstValueStored.value = true
-                        number.num1Value=""
-                        number.operation=""
-                        number.num2Value=""
-
+                        }
                     }
-
-
 
 
                 }

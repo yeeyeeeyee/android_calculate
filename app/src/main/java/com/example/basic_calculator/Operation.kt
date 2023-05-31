@@ -4,6 +4,7 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 class Operation {
+    //兩個參數
     private fun plus(num1: Double, num2: Double): BigDecimal {
         return BigDecimal.valueOf(num1).add(BigDecimal.valueOf(num2))
     }
@@ -42,6 +43,27 @@ class Operation {
 
         return if (result.toString().last() == '0') {
              result.toString()
+        } else {
+            result.toString()
+        }
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    //一個參數
+    private fun percent(num1: Double):BigDecimal{
+        return BigDecimal.valueOf(num1).divide(BigDecimal.valueOf(100))
+    }
+
+    fun operation(num1: Double, operation: String): String {
+        val result = when (operation) {
+            "%" -> percent(num1)
+
+            else -> BigDecimal.ZERO
+        }
+
+        return if (result.toString().last() == '0') {
+            result.toString()
         } else {
             result.toString()
         }
