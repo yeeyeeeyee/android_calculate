@@ -42,36 +42,11 @@ fun CalculatorUi() {
             //顯示已輸入的數字
 
             //數字1: 運算符號前
-            Text(
-                text = number.num1Value,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                overflow = TextOverflow.Clip,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                color = Color.Gray,
-                fontSize = 30.sp,
-            )
+            DisplayText(text = number.num1Value)
             //運算符號
-            Text(
-                text = number.operation,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                color = Color.Gray,
-                fontSize = 30.sp,
-            )
+            DisplayText(text = number.operation)
             //數字2: 運算符號後
-            Text(
-                text = number.num2Value,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                overflow = TextOverflow.Clip,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                color = Color.Gray,
-                fontSize = 30.sp,
-            )
+            DisplayText(text = number.num2Value)
 
             //顯示輸入文字
             Text(
@@ -234,7 +209,7 @@ fun CalculatorUi() {
                     if (number.operation != "") {
                         //要做出計算機的連續加法
                         //一個參數的
-                        if (number.num2Value == "") {
+                        if (display == "=") {
                             val answer = Operation().operation(
                                 num1 = number.num1Value.toDouble(),
                                 operation=number.operation
@@ -267,6 +242,20 @@ fun CalculatorUi() {
             }
         }
     }
+}
+
+@Composable
+fun DisplayText(text: String) {
+    Text(
+        text = text,
+        textAlign = TextAlign.Center,
+        maxLines = 1,
+        overflow = TextOverflow.Clip,
+        modifier = Modifier
+            .fillMaxWidth(),
+        color = Color.Gray,
+        fontSize = 30.sp,
+    )
 }
 
 
