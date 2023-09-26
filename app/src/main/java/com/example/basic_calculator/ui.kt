@@ -92,7 +92,6 @@ fun CalculatorUi() {
                         display = if (number.num1Value != "") {
                             "="
                     } else {
-
                         clearAllValues(number,isFirstValueStored)
                         "="
                     }
