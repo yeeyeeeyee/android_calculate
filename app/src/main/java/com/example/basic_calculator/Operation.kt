@@ -1,5 +1,6 @@
 package com.example.basic_calculator
 
+import android.annotation.SuppressLint
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -23,18 +24,23 @@ class Operation {
         return result.stripTrailingZeros().toPlainString()
     }
 
-    private fun percent(num1: Double):BigDecimal{
-        return BigDecimal.valueOf(num1).divide(BigDecimal.valueOf(100))
-    }
     //單參數
-    fun operation(num1: Double, operation: String): String {
-        val result = when (operation) {
-            "%" -> percent(num1)
+
+    private fun performOperation(num1: Double, operation: String): BigDecimal {
+        return when (operation) {
+            "%" -> BigDecimal.valueOf(num1).divide(BigDecimal.valueOf(100))
+            "x²" -> BigDecimal.valueOf(num1).pow(2)
             else -> BigDecimal.ZERO
         }
-
-        return result.stripTrailingZeros().toPlainString()
     }
+    @SuppressLint("SuspiciousIndentation")
+    fun operation(num1: Double, operation: String): String {
+        val result =  performOperation(num1, operation)
+            return result.stripTrailingZeros().toPlainString()
+        }
+
+
 }
+
 
 

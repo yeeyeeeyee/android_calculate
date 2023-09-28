@@ -29,6 +29,10 @@ import androidx.compose.ui.unit.sp
     設置 % 取餘數
     修改架構
     限制文字長度
+    給 "." 再次點擊,取消 "."
+
+已知道bug:
+    可以讓num1 為0. 結束
  */
 
 data class Display(var num1Value: String, var operation: String, var num2Value: String)
@@ -75,7 +79,7 @@ fun CalculatorUi() {
                     .fillMaxWidth()
                     .padding(10.dp), horizontalArrangement = Arrangement.SpaceAround
             ) {
-                //當沒有選擇符號為顯示百分位數,否則取餘數
+                //當沒有選擇符號 為顯示百分位數,否則取餘數
                 ButtonStyle("%") {
                     if (display != "=") {
                         if (isFirstValueStored.value) {
@@ -96,6 +100,7 @@ fun CalculatorUi() {
                         "="
                     }
                 }
+                //全部清空
                 ButtonStyle("C") {
                     clearAllValues(number, isFirstValueStored)
                     display = "="
@@ -113,7 +118,13 @@ fun CalculatorUi() {
                     .padding(10.dp), horizontalArrangement = Arrangement.SpaceAround
             ) {
                 ButtonStyle("⅟x") {}
-                ButtonStyle("x²") {}
+                ButtonStyle("x²") {
+                    val answer = Operation().operation(
+                        num1 = display.substring(1).toDouble(),
+                        operation= "x²"
+                    )
+                    display = "=$answer"
+                }
                 ButtonStyle("√x") {}
                 ButtonStyle("÷") {
                     if (display != "=") {
@@ -197,7 +208,17 @@ fun CalculatorUi() {
                     .padding(10.dp, 10.dp, 10.dp, 20.dp),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                ButtonStyle("+/-"){}
+                //加入正負號
+                ButtonStyle("+/-"){
+                    if (display != "=") {
+                        display = if (display.contains("-")) {
+                            display.replace("-", "")
+                        } else {
+                             "=-" + display.substring(1)
+                        }
+                    }
+                }
+
                 ButtonStyle("0", onclick = { display += "0" })
                 //沒有小數點就加上小數點
                 ButtonStyle(".") {
