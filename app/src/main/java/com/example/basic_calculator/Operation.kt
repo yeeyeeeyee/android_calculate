@@ -16,6 +16,8 @@ class Operation {
                 5,
                 RoundingMode.HALF_UP
             )
+            //取餘數
+            "%" -> BigDecimal.valueOf(num1).remainder(BigDecimal.valueOf(num2))
             else -> BigDecimal.ZERO
         }
     }
