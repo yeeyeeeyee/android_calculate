@@ -31,7 +31,11 @@ class Operation {
         return when (operation) {
             "%" -> BigDecimal.valueOf(num1).divide(BigDecimal.valueOf(100))
             "x²" -> BigDecimal.valueOf(num1).pow(2)
-            "√x" -> BigDecimal.valueOf(sqrt(num1))
+            "⅟x"-> BigDecimal.valueOf(1).divide(BigDecimal.valueOf(num1))
+            "√x" -> {
+                val sqrtResult = BigDecimal.valueOf(sqrt(num1))
+                return sqrtResult.setScale(5, RoundingMode.HALF_UP)
+            }
 
             else -> BigDecimal.ZERO
         }

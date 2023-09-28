@@ -117,7 +117,13 @@ fun CalculatorUi() {
                     .fillMaxWidth()
                     .padding(10.dp), horizontalArrangement = Arrangement.SpaceAround
             ) {
-                ButtonStyle("⅟x") {}
+                ButtonStyle("⅟x") {
+                    val answer = Operation().operation(
+                        num1 = display.substring(1).toDouble(),
+                        operation= "⅟x"
+                    )
+                    display = "=$answer"
+                }
                 ButtonStyle("x²") {
                     val answer = Operation().operation(
                         num1 = display.substring(1).toDouble(),
@@ -126,6 +132,7 @@ fun CalculatorUi() {
                     display = "=$answer"
                 }
                 ButtonStyle("√x") {
+                    //如果 display 是正數作更號 負數則會變為0以防出錯
                     display = if (display.substring(1).toDouble()>0.0){
                         val answer = Operation().operation(
                             num1 = display.substring(1).toDouble(),
