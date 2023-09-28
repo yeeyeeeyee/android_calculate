@@ -126,11 +126,19 @@ fun CalculatorUi() {
                     display = "=$answer"
                 }
                 ButtonStyle("√x") {
-                    val answer = Operation().operation(
-                        num1 = display.substring(1).toDouble(),
-                        operation= "√x"
-                    )
-                    display = "=$answer"
+                    display = if (display.substring(1).toDouble()>0.0){
+                        val answer = Operation().operation(
+                            num1 = display.substring(1).toDouble(),
+                            operation= "√x"
+                        )
+                        "=$answer"
+                    }else{
+                        val answer = Operation().operation(
+                            num1 = 0.0,
+                            operation= "√x"
+                        )
+                        "=$answer"
+                    }
                 }
                 ButtonStyle("÷") {
                     if (display != "=") {
