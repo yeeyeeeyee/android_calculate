@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
     設置 % 取餘數
     修改架構
     限制文字長度
-    給 "." 再次點擊,取消 "."
+    讓0.01 把 "."取消 會變成 001 改成只有 1
 
 已知道bug:
     可以讓num1 為0. 結束
@@ -243,7 +243,9 @@ fun CalculatorUi() {
                 ButtonStyle("0", onclick = { display += "0" })
                 //沒有小數點就加上小數點
                 ButtonStyle(".") {
-                    if (!display.contains(".")) {
+                    if (display.contains(".")) {
+                        display=display.replace(".", "")
+                    }else{
                         display += "."
                     }
                 }
