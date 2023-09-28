@@ -125,7 +125,13 @@ fun CalculatorUi() {
                     )
                     display = "=$answer"
                 }
-                ButtonStyle("√x") {}
+                ButtonStyle("√x") {
+                    val answer = Operation().operation(
+                        num1 = display.substring(1).toDouble(),
+                        operation= "√x"
+                    )
+                    display = "=$answer"
+                }
                 ButtonStyle("÷") {
                     if (display != "=") {
                         if (isFirstValueStored.value) {

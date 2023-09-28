@@ -3,6 +3,7 @@ package com.example.basic_calculator
 import android.annotation.SuppressLint
 import java.math.BigDecimal
 import java.math.RoundingMode
+import kotlin.math.sqrt
 
 class Operation {
     private fun performOperation(num1: Double, num2: Double, operation: String): BigDecimal {
@@ -30,6 +31,8 @@ class Operation {
         return when (operation) {
             "%" -> BigDecimal.valueOf(num1).divide(BigDecimal.valueOf(100))
             "x²" -> BigDecimal.valueOf(num1).pow(2)
+            "√x" -> BigDecimal.valueOf(sqrt(num1))
+
             else -> BigDecimal.ZERO
         }
     }
