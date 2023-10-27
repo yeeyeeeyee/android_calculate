@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
+
 /*
 欠缺功能:
     按 c 需要按其他鍵才會有反應
