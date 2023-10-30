@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
  */
 
 
-data class Display(var num1Value: String, var operation: String, var num2Value: String)
+
 
 @Composable
 fun CalculatorUi() {
@@ -45,20 +45,22 @@ fun CalculatorUi() {
     }
     val isFirstValueStored = remember { mutableStateOf(true) }
 
-    Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {//背景黑色 &&填滿畫面
+    //Surface(color = Color(0xff210440), modifier = Modifier.fillMaxSize()) {//背景黑色 &&填滿畫面
+    Surface(color = Color(0xffffffff), modifier = Modifier.fillMaxSize()) {
+
         //位置
         Column(verticalArrangement = Arrangement.Bottom) {
             //顯示已輸入的數字
 
             //數字1: 運算符號前
-            UiStyle().DisplayText(text = number.num1Value)
+            a.DisplayText(text = number.num1Value)
             //運算符號
-            UiStyle().DisplayText(text = number.operation)
+            a.DisplayText(text = number.operation)
             //數字2: 運算符號後
-            UiStyle().DisplayText(text = number.num2Value)
+            a.DisplayText(text = number.num2Value)
 
             //顯示輸入文字
-            UiStyle().Text(display)
+            a.Text(display)
 
             Spacer(modifier = Modifier.height(20.dp))
             //按鈕
@@ -68,7 +70,7 @@ fun CalculatorUi() {
                     .padding(10.dp), horizontalArrangement = Arrangement.SpaceAround
             ) {
                 //當沒有選擇符號 為顯示百分位數,否則取餘數
-                UiStyle().ButtonStyle("%") {
+                a.ButtonStyle("%") {
                     if (display != "=") {
                         if (isFirstValueStored.value) {
                             number.num1Value = display.substring(1)
@@ -80,7 +82,7 @@ fun CalculatorUi() {
                     }
                 }
                 //當value1還有值,就清除value2,否則全部清空
-                UiStyle().ButtonStyle("CE") {
+                a.ButtonStyle("CE") {
                         display = if (number.num1Value != "") {
                             "="
                     } else {
@@ -89,11 +91,11 @@ fun CalculatorUi() {
                     }
                 }
                 //全部清空
-                UiStyle().ButtonStyle("C") {
+               a.ButtonStyle("C") {
                     clearAllValues(number, isFirstValueStored)
                     display = "="
                 }
-                UiStyle().ButtonStyle("←") {
+               a.ButtonStyle("←") {
                     if (display.length > 1) {
                         display = display.dropLast(1)
                     }
@@ -105,21 +107,21 @@ fun CalculatorUi() {
                     .fillMaxWidth()
                     .padding(10.dp), horizontalArrangement = Arrangement.SpaceAround
             ) {
-                UiStyle().ButtonStyle("⅟x") {
+                a.ButtonStyle("⅟x") {
                     val answer = Operation().operation(
                         num1 = display.substring(1).toDouble(),
                         operation= "⅟x"
                     )
                     display = "=$answer"
                 }
-                UiStyle().ButtonStyle("x²") {
+                a.ButtonStyle("x²") {
                     val answer = Operation().operation(
                         num1 = display.substring(1).toDouble(),
                         operation= "x²"
                     )
                     display = "=$answer"
                 }
-                UiStyle().ButtonStyle("√x") {
+               a.ButtonStyle("√x") {
                     //如果 display 是正數作更號 負數則會變為0以防出錯
                     display = if (display.substring(1).toDouble()>0.0){
                         val answer = Operation().operation(
@@ -135,7 +137,7 @@ fun CalculatorUi() {
                         "=$answer"
                     }
                 }
-                UiStyle().ButtonStyle("÷") {
+                a.ButtonStyle("÷") {
                     if (display != "=") {
                         if (isFirstValueStored.value) {
                             number.num1Value = display.substring(1)
@@ -152,10 +154,10 @@ fun CalculatorUi() {
                     .fillMaxWidth()
                     .padding(10.dp), horizontalArrangement = Arrangement.SpaceAround
             ) {
-                UiStyle().ButtonStyle("7", onclick = { display += "7" })
-                UiStyle().ButtonStyle("8", onclick = { display += "8" })
-                UiStyle().ButtonStyle("9", onclick = { display += "9" })
-                UiStyle().ButtonStyle("x") {
+                a.ButtonStyle("7", onclick = { display += "7" })
+                a.ButtonStyle("8", onclick = { display += "8" })
+               a.ButtonStyle("9", onclick = { display += "9" })
+               a.ButtonStyle("x") {
                     if (display != "=") {
                         if (isFirstValueStored.value) {
                             number.num1Value = display.substring(1)
@@ -173,10 +175,10 @@ fun CalculatorUi() {
                     .fillMaxWidth()
                     .padding(10.dp), horizontalArrangement = Arrangement.SpaceAround
             ) {
-                UiStyle().ButtonStyle("4", onclick = { display += "4" })
-                UiStyle().ButtonStyle("5", onclick = { display += "5" })
-                UiStyle().ButtonStyle("6", onclick = { display += "6" })
-                UiStyle().ButtonStyle("-") {
+                a.ButtonStyle("4", onclick = { display += "4" })
+                a.ButtonStyle("5", onclick = { display += "5" })
+               a.ButtonStyle("6", onclick = { display += "6" })
+               a.ButtonStyle("-") {
                     if (display != "=") {
                         if (isFirstValueStored.value) {
                             number.num1Value = display.substring(1)
@@ -194,11 +196,11 @@ fun CalculatorUi() {
                     .fillMaxWidth()
                     .padding(10.dp), horizontalArrangement = Arrangement.SpaceAround
             ) {
-                UiStyle().ButtonStyle("1", onclick = { display += "1" })
-                UiStyle().ButtonStyle("2", onclick = { display += "2" })
-                UiStyle().ButtonStyle("3", onclick = { display += "3" })
+               a.ButtonStyle("1", onclick = { display += "1" })
+                a.ButtonStyle("2", onclick = { display += "2" })
+                a.ButtonStyle("3", onclick = { display += "3" })
                 //如果display 沒有數字無法啟用,當有數字時同時設定number.value的值跟operation為"+"
-                UiStyle().ButtonStyle("+") {
+               a.ButtonStyle("+") {
                     if (display != "=") {
                         if (isFirstValueStored.value) {
                             number.num1Value = display.substring(1)
@@ -218,7 +220,7 @@ fun CalculatorUi() {
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 //加入正負號
-                UiStyle().ButtonStyle("+/-"){
+                a.ButtonStyle("+/-"){
                     if (display != "=") {
                         display = if (display.contains("-")) {
                             display.replace("-", "")
@@ -228,9 +230,9 @@ fun CalculatorUi() {
                     }
                 }
 
-                UiStyle().ButtonStyle("0", onclick = { display += "0" })
+               a.ButtonStyle("0", onclick = { display += "0" })
                 //沒有小數點就加上小數點
-                UiStyle().ButtonStyle(".") {
+               a.ButtonStyle(".") {
                     if (display.contains(".")) {
                         display=display.replace(".", "")
                     }else{
@@ -238,7 +240,7 @@ fun CalculatorUi() {
                     }
                 }
                 //需要先把文字轉成數字才能運算
-                UiStyle().ButtonStyle("=") {
+               a.ButtonStyle("=") {
                     //防止啥都不按,只按'='
                     if (number.operation != "") {
                         //要做出計算機的連續加法
