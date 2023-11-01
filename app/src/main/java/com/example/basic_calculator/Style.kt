@@ -1,7 +1,6 @@
 package com.example.basic_calculator
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,11 +20,22 @@ import androidx.compose.ui.unit.sp
 
 
 
-val a:UiStyle= UiStyle(
+val StyleColor:UiStyle= UiStyle(
+    //樣式一
+    /*
     buttonColor = Color(0xffC5C9BA),
-            textColors = Color(0xff4A514D),
-            displayTextColor = Color(0xff4A514D),
-            borderColor = Color(0xff889275)
+    textColors = Color(0xff4A514D),
+    displayTextColor = Color(0xff4A514D),
+    borderColor = Color(0xff889275),
+    backGroundColor =Color.White
+    */
+
+    //樣式二
+    buttonColor = Color(0xffFFBA00),
+    textColors = Color(0xffffffff),
+    displayTextColor = Color(0xffffffff),
+    borderColor = Color(0xff000000),
+    backGroundColor =  Color(0xff210440)
 )
 
 class UiStyle(
@@ -33,25 +43,9 @@ class UiStyle(
     private var textColors: Color = Color.Black,
     private var displayTextColor:Color=Color.Black,
     private var borderColor:Color=Color.Red,
-    private var backGroundColor:Color= Color.White
+    var backGroundColor:Color= Color.White
 
     ){
-    //暫存顏色
-   /* init {
-        buttonColor = Color(0xffC5C9BA)
-        textColors = Color(0xff4A514D)
-        displayTextColor = Color(0xff4A514D)
-        borderColor = Color(0xff889275)
-
-    }
-*/
-   /* init {
-        buttonColor = Color(0xffFFBA00)
-        textColors = Color(0xffffffff)
-        displayTextColor = Color(0xffffffff)
-        borderColor = Color(0xff000000)
-    }
-*/
     @Composable
     //按鈕樣式
     fun ButtonStyle(
@@ -108,15 +102,10 @@ class UiStyle(
         )
     }
 
-    @Composable
-    fun Surface(modifier: Modifier){
-        androidx.compose.material3.Surface(
-            color = backGroundColor,
-            modifier = Modifier.fillMaxSize()
-        ){
 
-        }
-    }
+
+
+
 
 
 }
