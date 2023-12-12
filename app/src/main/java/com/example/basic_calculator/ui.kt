@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,16 +23,20 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 
 
 /*
@@ -53,7 +58,6 @@ fun CalculatorUi() {
 
     TopBar()
 
-    BasicContent()
 
     }
 
@@ -64,48 +68,75 @@ fun CalculatorUi() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(){
-    Scaffold(
-        topBar = {
-        TopAppBar(
-            title = { Text(text = "Calculator") },
-            //頂部導覽的顏色
-            colors = TopAppBarDefaults.smallTopAppBarColors(
-                containerColor= StyleColor.backGroundColor,
-                titleContentColor = Color.White,
-                navigationIconContentColor = Color.White
-            ),
-            navigationIcon={
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(Icons.Filled.Menu , contentDescription ="menu" )
-                }
-            }
-        )},
-        //這是調整頂部導覽以下的顏色
-         containerColor = StyleColor.backGroundColor,
-        contentColor = Color.White,
-        ){}
-    }
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Drawer(){
     ModalNavigationDrawer(
         drawerContent = {
-            ModalDrawerSheet {
-                Text("設定標題", modifier = Modifier.padding(30.dp))
+            //整個抽屜
+            ModalDrawerSheet (modifier = Modifier.padding(end = 100.dp)){
+                Text("設定標題", fontSize = 30.sp ,modifier = Modifier.padding(20.dp))
                 Divider()
                 NavigationDrawerItem(
-                    label = { Text(text = "Drawer Item") },
+                    label = { Text(text = "基礎功能") },
+                    selected = false,
+                    onClick = { /*TODO*/ }
+                )
+                NavigationDrawerItem(
+                    label = { Text(text = "計算貨幣") },
+                    selected = false,
+                    onClick = { /*TODO*/ }
+                )
+                NavigationDrawerItem(
+                    label = { Text(text = "計算長度") },
+                    selected = false,
+                    onClick = { /*TODO*/ }
+                )
+                NavigationDrawerItem(
+                    label = { Text(text = "配置設定") },
                     selected = false,
                     onClick = { /*TODO*/ }
                 )
                 // ...other drawer items
             }
-        }
+        },
+        //初始狀態
+        drawerState = drawerState,
+        //是否可以拖移打開抽屜
+        gesturesEnabled = true,
     ) {
-        // Screen content
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(text = "Calculator") },
+                    //頂部導覽的顏色
+                    colors = TopAppBarDefaults.smallTopAppBarColors(
+                        containerColor = StyleColor.backGroundColor,
+                        titleContentColor = Color.White,
+                        navigationIconContentColor = Color.White
+                    ),
+                    navigationIcon = {
+                        IconButton(onClick = {scope.launch{
+                            drawerState.apply {
+                               open()
+                            }
+                        }
+                        }) {
+                            Icon(Icons.Filled.Menu, contentDescription = "menu")
+                        }
+                    }
+                )
+            },
+            //這是調整頂部導覽以下的顏色
+            containerColor = StyleColor.backGroundColor,
+            contentColor = Color.White,
+        ) {
+            BasicContent()
+        }
     }
 }
+
+
 
 @Composable
 fun BasicContent(){
