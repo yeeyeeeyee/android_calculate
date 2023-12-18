@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
@@ -19,6 +20,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -44,7 +46,6 @@ import kotlinx.coroutines.launch
     按 c 需要按其他鍵才會有反應
     修改架構
     限制文字長度
-    讓0.01 把 "."取消 會變成 001 改成只有 1
 
 欠缺風格:
 頂部導覽的menu配上抽屜導覽
@@ -67,33 +68,51 @@ fun CalculatorUi() {
 fun TopBar(){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-
+    //抽屜動畫樣式
     ModalNavigationDrawer(
         drawerContent = {
-            //整個抽屜
+            //整個抽屜內部樣式
             ModalDrawerSheet (modifier = Modifier.padding(end = 100.dp)){
                 Text("設定標題", fontSize = 30.sp ,modifier = Modifier.padding(20.dp))
-                Divider()
+                Divider(thickness=2.dp, modifier = Modifier.padding(bottom= 5.dp))
                 NavigationDrawerItem(
                     label = { Text(text = "基礎功能") },
+                    icon = {Icon(Icons.Default.Add, contentDescription = "add")},
                     selected = false,
                     onClick = { /*TODO*/ }
                 )
                 NavigationDrawerItem(
-                    label = { Text(text = "計算貨幣") },
+                    label = { Text(text = "貨幣") },
+                    icon = {Icon(Icons.Default.Add, contentDescription = "add")},
+                    selected = false,
+                    onClick = { /*TODO*/ },
+                    colors = NavigationDrawerItemDefaults.colors( unselectedContainerColor = Color.Gray, unselectedIconColor = Color.Black)
+                )
+                NavigationDrawerItem(
+                    label = { Text(text = "容積") },
+                    icon = {Icon(Icons.Default.Add, contentDescription = "add")},
                     selected = false,
                     onClick = { /*TODO*/ }
                 )
                 NavigationDrawerItem(
-                    label = { Text(text = "計算長度") },
+                    label = { Text(text = "重量與質量") },
+                    icon = {Icon(Icons.Default.Add, contentDescription = "add")},
+                    selected = false,
+                    onClick = { /*TODO*/ }
+                )
+                NavigationDrawerItem(
+                    label = { Text(text = "溫度") },
+                    icon = {Icon(Icons.Default.Add, contentDescription = "add")},
                     selected = false,
                     onClick = { /*TODO*/ }
                 )
                 NavigationDrawerItem(
                     label = { Text(text = "配置設定") },
+                    icon = {Icon(Icons.Default.Add, contentDescription = "add")},
                     selected = false,
                     onClick = { /*TODO*/ }
                 )
+
                 // ...other drawer items
             }
         },
@@ -101,6 +120,8 @@ fun TopBar(){
         drawerState = drawerState,
         //是否可以拖移打開抽屜
         gesturesEnabled = true,
+        //打開後背景顏色
+        scrimColor = StyleColor.backGroundColor
     ) {
         Scaffold(
             topBar = {
@@ -331,7 +352,16 @@ fun BasicContent(){
             //沒有小數點就加上小數點
             StyleColor.ButtonStyle(".") {
                 if (display.contains(".")) {
-                    display=display.replace(".", "")
+
+                    // 當個數字只有小數,移除小數位數前的所有0
+                    if( display.getOrNull(1) == '0'){
+                        display = display.replace(Regex("\\.0*"), "")
+                        display = display.replaceRange(1, 2, "")
+                    }else{
+                        //不只有小數時只把小數點替換掉
+                        display=display.replace(".","")
+
+                    }
                 }else{
                     display += "."
                 }
