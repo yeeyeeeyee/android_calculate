@@ -29,18 +29,27 @@ val StyleColor:UiStyle= UiStyle(
     borderColor = Color(0xff889275),
     backGroundColor =Color.White
     */
-
     //樣式二
     buttonColor = Color(0xffFFBA00),
     textColors = Color(0xffffffff),
     displayTextColor = Color(0xffffffff),
     borderColor = Color(0xff000000),
     backGroundColor =  Color(0xff210440)
+/*
+    //原樣式
+    buttonColor = Color.Black,
+    buttonTextColor = Color(0xFF135BE8),
+    textColors  = Color.White ,
+    displayTextColor = Color.Gray,
+    borderColor = Color(0xFF135BE8),
+    backGroundColor = Color.Black
+    */
 )
 
 class UiStyle(
     private var buttonColor: Color = Color.Red,
     private var textColors: Color = Color.Black,
+    private var buttonTextColor: Color = Color.Black,
     private var displayTextColor:Color=Color.Black,
     private var borderColor:Color=Color.Red,
     var backGroundColor:Color= Color.White
@@ -64,7 +73,7 @@ class UiStyle(
                 text = text,
                 fontSize = 30.sp,
                 style = MaterialTheme.typography.displayLarge,
-                color = Color.Black,
+                color = buttonTextColor,
                 modifier = Modifier
                     .size(40.dp),
                 textAlign = TextAlign.Center
