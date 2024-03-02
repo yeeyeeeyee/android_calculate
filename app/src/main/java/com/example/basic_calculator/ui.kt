@@ -48,8 +48,7 @@ import kotlinx.coroutines.launch
 
 已知道bug:
     可以讓num1 為0. 結束 (應該解決了
-    按 c 需要按其他鍵才會有反應
-    當按下"*"後反悔改按成"+" 要讓operation 的顯示要有及時變化(相同情況
+
  */
 
 @Composable

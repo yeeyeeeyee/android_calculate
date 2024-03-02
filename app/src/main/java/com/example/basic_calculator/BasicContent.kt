@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,30 +19,40 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun BasicContent(){
-    val number by remember {
-        mutableStateOf(Display(num1Value = "", operation = "", num2Value = ""))
+
+    var num1Value by remember {
+        mutableStateOf("")
     }
+    var operation by remember { mutableStateOf("")}
+    var  num2Value by remember { mutableStateOf("")}
+
     var display by remember {
         mutableStateOf("=")
     }
     val isFirstValueStored = remember { mutableStateOf(true) }
     //取出運算符號的相同代碼
-    fun operator(operator:String){
-        number.num1Value = display.substring(1).toDouble().toString()
-        number.operation = operator
+    fun operator(){
+        num1Value = display.substring(1).toDouble().toString()
         display = "="
         isFirstValueStored.value = false
     }
+    fun clearAllValues() {
+        num1Value = ""
+        num2Value = ""
+        operation = ""
+        isFirstValueStored.value = true
+    }
+
     //位置
     Column(modifier = Modifier.fillMaxSize(),verticalArrangement = Arrangement.Bottom) {
         //顯示已輸入的數字
 
         //數字1: 運算符號前
-        StyleColor.DisplayText(text = number.num1Value)
+        StyleColor.DisplayText(text = num1Value)
         //運算符號
-        StyleColor.DisplayText(text = number.operation)
+        StyleColor.DisplayText(text = operation)
         //數字2: 運算符號後
-        StyleColor.DisplayText(text = number.num2Value)
+        StyleColor.DisplayText(text = num2Value)
 
         //顯示輸入文字
         StyleColor.Text(display)
@@ -57,25 +66,26 @@ fun BasicContent(){
         ) {
             //當沒有選擇符號 為顯示百分位數,否則取餘數
             StyleColor.ButtonStyle("%") {
+                operation = "%"
                 if (display != "=") {
                     if (isFirstValueStored.value) {
-                        operator("%")
+                        operator()
 
                     }
                 }
             }
             //當value1還有值,就清除value2,否則全部清空
             StyleColor.ButtonStyle("CE") {
-                display = if (number.num1Value != "") {
+                display = if (num1Value != "") {
                     "="
                 } else {
-                    clearAllValues(number,isFirstValueStored)
+                    clearAllValues()
                     "="
                 }
             }
             //全部清空
             StyleColor.ButtonStyle("C") {
-                clearAllValues(number, isFirstValueStored)
+                clearAllValues()
                 display = "="
             }
             StyleColor.ButtonStyle("←") {
@@ -121,9 +131,10 @@ fun BasicContent(){
                 }
             }
             StyleColor.ButtonStyle("÷") {
+                operation = "÷"
                 if (display != "=") {
                     if (isFirstValueStored.value) {
-                        operator("÷")
+                        operator()
                     }
                 }
             }
@@ -138,10 +149,10 @@ fun BasicContent(){
             StyleColor.ButtonStyle("8", onclick = { display += "8" })
             StyleColor.ButtonStyle("9", onclick = { display += "9" })
             StyleColor.ButtonStyle("x") {
+                operation = "x"
                 if (display != "=") {
                     if (isFirstValueStored.value) {
-                        operator("x")
-
+                        operator()
                     }
                 }
             }
@@ -156,11 +167,12 @@ fun BasicContent(){
             StyleColor.ButtonStyle("5", onclick = { display += "5" })
             StyleColor.ButtonStyle("6", onclick = { display += "6" })
             StyleColor.ButtonStyle("-") {
+                operation = "-"
                 if (display != "=") {
                     if (isFirstValueStored.value) {
-                        operator("-")
-
+                        operator()
                     }
+
                 }
             }
         }
@@ -173,11 +185,12 @@ fun BasicContent(){
             StyleColor.ButtonStyle("1", onclick = { display += "1" })
             StyleColor.ButtonStyle("2", onclick = { display += "2" })
             StyleColor.ButtonStyle("3", onclick = { display += "3" })
-            //如果display 沒有數字無法啟用,當有數字時同時設定number.value的值跟operation為"+"
+            //如果display 沒有數字無法啟用,當有數字時同時設定value的值跟operation為"+"
             StyleColor.ButtonStyle("+") {
+                operation = "+"
                 if (display != "=") {
                     if (isFirstValueStored.value) {
-                        operator("+")
+                        operator()
                     }
                 }
             }
@@ -221,27 +234,27 @@ fun BasicContent(){
             //需要先把文字轉成數字才能運算
             StyleColor.ButtonStyle("=") {
                 //防止啥都不按,只按'='
-                if (number.operation != "") {
+                if (operation != "") {
                     //要做出計算機的連續加法
                     //一個參數的
                     if (display == "=") {
                         val answer = Operation().operation(
-                            num1 = number.num1Value.toDouble(),
-                            operation=number.operation
+                            num1 = num1Value.toDouble(),
+                            operation=operation
                         )
                         display = "=$answer"
-                        clearAllValues(number,isFirstValueStored)
+                        clearAllValues()
 
                         //兩個參數的
                     } else {
-                        number.num2Value = display.substring(1)
+                        num2Value = display.substring(1)
                         val answer = Operation().operation(
-                            num1 = number.num1Value.toDouble(),
-                            num2 = number.num2Value.toDouble(),
-                            operation = number.operation
+                            num1 = num1Value.toDouble(),
+                            num2 = num2Value.toDouble(),
+                            operation = operation
                         )
                         display = "=$answer"
-                        clearAllValues(number,isFirstValueStored)
+                        clearAllValues()
 
                     }
                 }
@@ -252,13 +265,6 @@ fun BasicContent(){
     }
 }
 
-//清除
-private fun clearAllValues(number: Display, isFirstValueStored: MutableState<Boolean>) {
-    number.num1Value = ""
-    number.num2Value = ""
-    number.operation = ""
-    isFirstValueStored.value = true
-}
 
 @Preview(showBackground = false)
 @Composable
