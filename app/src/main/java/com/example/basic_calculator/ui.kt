@@ -43,15 +43,25 @@ import kotlinx.coroutines.launch
 
 /*
 欠缺功能:
-    按 c 需要按其他鍵才會有反應
-    修改架構
-    限制文字長度
+    可以把畫面變橫向
+    轉成橫的也有可以呈現方式 <= 參考手機計算機
+    長按顯示功能 <= 參考手機機算機
+    音樂聲音功能
+    從右往左滑 還原 , 從左往右滑 刪除
 
 欠缺風格:
-頂部導覽的menu配上抽屜導覽
+
+
+修改or優化:
+    修改架構
+    限制文字長度
+    數字過大換成顯示科學符號
+    導航列也要集中在StyleColor一起改顏色
 
 已知道bug:
     可以讓num1 為0. 結束
+    按 c 需要按其他鍵才會有反應
+    當按下"*"後反悔改按成"+" 要讓operation 的顯示要有及時變化(相同情況
  */
 
 @Composable
@@ -166,6 +176,12 @@ fun BasicContent(){
     }
     val isFirstValueStored = remember { mutableStateOf(true) }
 
+    fun operator(operator:String){
+        number.num1Value = display.substring(1).toDouble().toString()
+        number.operation = operator
+        display = "="
+        isFirstValueStored.value = false
+    }
     //位置
     Column(modifier = Modifier.fillMaxSize(),verticalArrangement = Arrangement.Bottom) {
         //顯示已輸入的數字
@@ -191,10 +207,7 @@ fun BasicContent(){
             StyleColor.ButtonStyle("%") {
                 if (display != "=") {
                     if (isFirstValueStored.value) {
-                        number.num1Value = display.substring(1)
-                        number.operation = "%"
-                        display = "="
-                        isFirstValueStored.value = false
+                        operator("%")
 
                     }
                 }
@@ -258,10 +271,7 @@ fun BasicContent(){
             StyleColor.ButtonStyle("÷") {
                 if (display != "=") {
                     if (isFirstValueStored.value) {
-                        number.num1Value = display.substring(1)
-                        number.operation = "÷"
-                        display = "="
-                        isFirstValueStored.value = false
+                        operator("÷")
                     }
                 }
             }
@@ -278,10 +288,7 @@ fun BasicContent(){
             StyleColor.ButtonStyle("x") {
                 if (display != "=") {
                     if (isFirstValueStored.value) {
-                        number.num1Value = display.substring(1)
-                        number.operation = "x"
-                        display = "="
-                        isFirstValueStored.value = false
+                        operator("x")
 
                     }
                 }
@@ -299,10 +306,7 @@ fun BasicContent(){
             StyleColor.ButtonStyle("-") {
                 if (display != "=") {
                     if (isFirstValueStored.value) {
-                        number.num1Value = display.substring(1)
-                        number.operation = "-"
-                        display = "="
-                        isFirstValueStored.value = false
+                        operator("-")
 
                     }
                 }
@@ -321,11 +325,7 @@ fun BasicContent(){
             StyleColor.ButtonStyle("+") {
                 if (display != "=") {
                     if (isFirstValueStored.value) {
-                        number.num1Value = display.substring(1)
-                        number.operation = "+"
-                        display = "="
-                        isFirstValueStored.value = false
-
+                        operator("+")
                     }
                 }
             }
